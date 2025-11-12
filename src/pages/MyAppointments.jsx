@@ -18,17 +18,12 @@ export const MyAppointments = () => {
 
     const fetchAppointments = async () => {
         setLoading(true)
-        console.log('fetchAppointments() ', user.id);
-
 
         // First get client ID
         const { data: clientData } = await supabase
             .from('clients')
             .select('id')
             .eq('user_id', user.id)
-
-        console.log('clientData ', { clientData });
-
 
         if (!clientData || clientData.length === 0) {
             setLoading(false)
@@ -37,9 +32,6 @@ export const MyAppointments = () => {
         }
 
         const clientIds = clientData.map(c => c.id)
-
-        console.log('clientIds ', { clientIds });
-
 
         // Build query
         let query = supabase
@@ -58,7 +50,7 @@ export const MyAppointments = () => {
           name,
           description
         ),
-        employees (
+        employees!appointments_employee_id_fkey (
           id,
           first_name,
           last_name
@@ -103,8 +95,8 @@ export const MyAppointments = () => {
                     <button
                         onClick={() => setFilter('all')}
                         className={`px-6 py-2 rounded-md text-sm font-medium transition-colors ${filter === 'all'
-                            ? 'bg-purple-600 text-white'
-                            : 'text-gray-700 hover:text-purple-600'
+                                ? 'bg-purple-600 text-white'
+                                : 'text-gray-700 hover:text-purple-600'
                             }`}
                     >
                         All
@@ -112,8 +104,8 @@ export const MyAppointments = () => {
                     <button
                         onClick={() => setFilter('upcoming')}
                         className={`px-6 py-2 rounded-md text-sm font-medium transition-colors ${filter === 'upcoming'
-                            ? 'bg-purple-600 text-white'
-                            : 'text-gray-700 hover:text-purple-600'
+                                ? 'bg-purple-600 text-white'
+                                : 'text-gray-700 hover:text-purple-600'
                             }`}
                     >
                         Upcoming
@@ -121,8 +113,8 @@ export const MyAppointments = () => {
                     <button
                         onClick={() => setFilter('past')}
                         className={`px-6 py-2 rounded-md text-sm font-medium transition-colors ${filter === 'past'
-                            ? 'bg-purple-600 text-white'
-                            : 'text-gray-700 hover:text-purple-600'
+                                ? 'bg-purple-600 text-white'
+                                : 'text-gray-700 hover:text-purple-600'
                             }`}
                     >
                         Past
